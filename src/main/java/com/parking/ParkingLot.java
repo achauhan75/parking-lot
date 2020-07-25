@@ -1,6 +1,5 @@
 package com.parking;
 
-import com.parking.enums.Day;
 import com.parking.enums.Size;
 import com.parking.enums.TicketStatus;
 import com.parking.exceptions.DuplicateParkingSpotException;
@@ -8,7 +7,6 @@ import com.parking.exceptions.ParkingException;
 import com.parking.exceptions.ParkingSpotNotFoundException;
 import com.parking.interfaces.IParkingLot;
 import com.parking.interfaces.IParkingSpot;
-import com.parking.interfaces.ITicket;
 import com.parking.interfaces.IVehicle;
 
 import java.time.DayOfWeek;

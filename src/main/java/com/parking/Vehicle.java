@@ -4,10 +4,8 @@ import com.parking.enums.Size;
 import com.parking.enums.VehicleType;
 import com.parking.exceptions.ParkingSpotNotFoundException;
 import com.parking.interfaces.IParkingSpot;
-import com.parking.interfaces.ITicket;
 import com.parking.interfaces.IVehicle;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;

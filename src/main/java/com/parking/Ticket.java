@@ -45,13 +45,12 @@ public class Ticket {
         exitTime = LocalDateTime.now();
         assert timeIssued != null;
         int duration = exitTime.minusHours(timeIssued.getHour()).getHour();
-        if(WeekDayPrice.WEEK_DAY.getDays().contains(day)) {
+        if (WeekDayPrice.WEEK_DAY.getDays().contains(day)) {
             return 2 * duration * getPricePerHourByVehicleSize(vehicleSize);
         }
         else {
             return duration * getPricePerHourByVehicleSize(vehicleSize);
         }
-
     }
 
     public double getRateByHour(DayOfWeek day, int hours, Size vehicleSize){

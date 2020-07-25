@@ -1,12 +1,18 @@
 package com.parking;
 
+import com.parking.enums.Day;
+import com.parking.enums.Size;
+import com.parking.enums.TicketStatus;
 import com.parking.exceptions.DuplicateParkingSpotException;
 import com.parking.exceptions.ParkingException;
 import com.parking.exceptions.ParkingSpotNotFoundException;
 import com.parking.interfaces.IParkingLot;
 import com.parking.interfaces.IParkingSpot;
+import com.parking.interfaces.ITicket;
 import com.parking.interfaces.IVehicle;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.function.Predicate;
@@ -74,11 +80,12 @@ public class ParkingLot implements IParkingLot {
 	public IParkingSpot parkVehicle(IVehicle vehicle) throws ParkingSpotNotFoundException, ParkingException {
 
 		IParkingSpot parkingSpot = vehicle.pickBestParking(parkingSpotsVacant);
+		Ticket ticket = new Ticket(LocalDateTime.now(),  null);
+		ticket.setStatus(TicketStatus.ACTIVE);
+		vehicle.assignTicket(ticket);
 		parkingSpot.parkVehicle(vehicle);
-
 		parkingSpotsVacant.remove(parkingSpot);
 		parkingSpotsOccupied.add(parkingSpot);
-
 		return parkingSpot;
 	}
 
@@ -87,9 +94,20 @@ public class ParkingLot implements IParkingLot {
 	public void unParkVehicle(IVehicle vehicle) throws ParkingSpotNotFoundException {
 		IParkingSpot parkingSpot = findParkingSpot(vehicle);
 		parkingSpot.removeCurrentVehicle();
-
+		Ticket ticket = vehicle.showTicket();
+		ticket.setStatus(TicketStatus.PAID);
+		DayOfWeek day = LocalDateTime.now().getDayOfWeek();
+		double rate = ticket.getRate(day, vehicle.getSize());
+		System.out.println("Total Aount to be paid for parking is" + rate);
+		vehicle.assignTicket(ticket);
 		parkingSpotsOccupied.remove(parkingSpot);
 		parkingSpotsVacant.add(parkingSpot);
+	}
+
+	@Override
+	public double getParkingRates(int hours, DayOfWeek day, Size size) {
+		Ticket ticket = new Ticket();
+		return ticket.getRateByHour(day, hours, size);
 	}
 
 

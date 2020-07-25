@@ -1,5 +1,6 @@
 package com.parking.interfaces;
 
+import com.parking.Ticket;
 import com.parking.enums.Size;
 import com.parking.exceptions.ParkingSpotNotFoundException;
 
@@ -10,10 +11,13 @@ import java.util.Collection;
  */
 public interface IVehicle {
 
-	String getvehicleNumber();
+	String getVehicleNumber();
 
 	Size getSize();
 
+	Ticket showTicket();
+
+	void assignTicket(Ticket ticket);
 
 	/**
 	 * Pick the best parking spot from all the parking spots in the parking lot according to the size.

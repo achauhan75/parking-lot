@@ -4,8 +4,10 @@ import com.parking.enums.Size;
 import com.parking.enums.VehicleType;
 import com.parking.exceptions.ParkingSpotNotFoundException;
 import com.parking.interfaces.IParkingSpot;
+import com.parking.interfaces.ITicket;
 import com.parking.interfaces.IVehicle;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -18,14 +20,14 @@ import java.util.stream.Collectors;
 public class Vehicle implements IVehicle {
 	private final String vehicleNumber;
 	private final VehicleType type;
-
+	private Ticket ticket;
 	Vehicle(String vehicleNumber, VehicleType type) {
 		this.vehicleNumber = vehicleNumber;
 		this.type = type;
 	}
 
 	@Override
-	public String getvehicleNumber() {
+	public String getVehicleNumber() {
 		return vehicleNumber;
 	}
 
@@ -34,6 +36,16 @@ public class Vehicle implements IVehicle {
 		return type.getSize();
 	}
 
+
+	public Ticket showTicket() {
+		System.out.println("Entry Time: " + ticket.getTimeIssued() + "Exit time" + ticket.getExitTime() + "Ticket Status" + ticket.getTicketStatus());
+		return ticket;
+	}
+
+	@Override
+	public void assignTicket(Ticket ticketAssigned) {
+		ticket = ticketAssigned;
+	}
 	/**
 	 * Pick the best parking spot according to the size of vehicle and spot from all the parking spots in the parking lot.
 	 *

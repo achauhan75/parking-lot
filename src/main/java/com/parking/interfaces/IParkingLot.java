@@ -1,9 +1,11 @@
 package com.parking.interfaces;
 
+import com.parking.enums.Size;
 import com.parking.exceptions.DuplicateParkingSpotException;
 import com.parking.exceptions.ParkingException;
 import com.parking.exceptions.ParkingSpotNotFoundException;
 
+import java.time.DayOfWeek;
 import java.util.Collection;
 
 /**
@@ -26,4 +28,6 @@ public interface IParkingLot {
 	IParkingSpot findParkingSpot(IVehicle vehicle) throws ParkingSpotNotFoundException;
 
 	IParkingSpot findParkingSpot(int id) throws ParkingSpotNotFoundException;
+
+	double getParkingRates(int hours, DayOfWeek day, Size size);
 }

@@ -8,6 +8,7 @@ import com.parking.exceptions.ParkingSpotNotFoundException;
 import com.parking.interfaces.IParkingSpot;
 import com.parking.interfaces.IVehicle;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class ParkingLotService {
@@ -17,11 +18,11 @@ public class ParkingLotService {
         ParkingLot lot = new ParkingLot();
         Scanner scanner = new Scanner(System.in);
         while(true) {
-        System.out.println("\nSelect Option\n 1. Add parking Spot\n 2. Remove Parking Spot\n 3. Display Parking Spots\n 4." +
-                " Park Vehicle\n 5. Unpark a Vehicle\n 6. Find Parking Spot\n 7.exit\n");
+        System.out.println("\n***********\nSelect Option\n 1. Add parking Spot\n 2. Remove Parking Spot\n 3. Display Parking Spots\n 4." +
+                " Park Vehicle\n 5. Unpark a Vehicle\n 6. Find Parking Spot\n 7. Display Parking Rates\n 8.exit\n***********");
 
         int input = scanner.nextInt();
-        if(input == 7) break;
+        if(input == 8) break;
         String sizeInput;
         String vehicleInput;
         Size size = null;
@@ -105,7 +106,7 @@ public class ParkingLotService {
                     case 1: System.out.println("Add Id of Parking Lot");
                         int idOfSpot = scanner.nextInt();
                         IParkingSpot spotFetched = lot.findParkingSpot(idOfSpot);
-                        System.out.println("Spot size: " + spotFetched.getSize() + " \nCurrent Vehicle in this Spot: " + spotFetched.getCurrentVehicle().getvehicleNumber());
+                        System.out.println("Spot size: " + spotFetched.getSize() + " \nCurrent Vehicle in this Spot: " + spotFetched.getCurrentVehicle().getVehicleNumber());
                         break;
                     case 2:
                         System.out.println("Add Type of vehicle to remove");
@@ -129,6 +130,26 @@ public class ParkingLotService {
                         lot.findParkingSpot(vehicle1);
                         break;
                 }
+                break;
+            case 7:
+                System.out.println("Add Type of vehicle (CAR, BUS, BIKE)");
+                vehicleInput =scanner.next();
+                if(vehicleInput.equalsIgnoreCase("CAR")) {
+                    size = Size.MEDIUM;
+                }
+                else if(vehicleInput.equalsIgnoreCase("BUS")) {
+                    size = Size.LARGE;
+                }
+                else if(vehicleInput.equalsIgnoreCase("BIKE")) {
+                    size = Size.SMALL;
+                }
+                else {
+                    System.out.println("Select Vehicle type from CAR, BUS, BIKE only.");
+                    break;
+                }
+                System.out.println("Enter Number of hours to park vehicle");
+                int hours = scanner.nextInt();
+                System.out.println("Price is: " + lot.getParkingRates(hours, LocalDateTime.now().getDayOfWeek(), size));
                 break;
             default:
                 lot.displayAllParkingSlots();
